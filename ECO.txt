@@ -1,0 +1,5 @@
+enable
+configure terminal
+hostname <hostname>
+ip domain-name <domain-name>
+write memory

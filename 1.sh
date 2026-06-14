@@ -1,4 +1,26 @@
   GNU nano 8.7                                                    1-1.3
+
+#!/bin/bash
+
+IFACE="ens33"
+NEWNAME="eth19"
+
+MAC=$(cat /sys/class/net/$IFACE/address)
+
+cat > /etc/systemd/network/10-$IFACE.link <<EOF
+[Match]
+MACAddress=$MAC
+
+[Link]
+Name=$NEWNAME
+EOF
+
+echo "Создан .link файл для $IFACE -> $NEWNAME"
+echo "Перезагрузите систему для применения"
+
+
+
+
 #!/bin/bash
 hostnamectl set-hostname isp.au-team.irpo
 echo "Имя задано"
@@ -72,3 +94,4 @@ mkdir -p /etc/sysconfig
 iptables-save > /etc/sysconfig/iptables
 systemctl enable --now iptables
 echo "Yes 1.9"
+systemctl restart network
