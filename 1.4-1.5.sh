@@ -1,3 +1,4 @@
+#!/bin/bash
 mkdir -p /etc/net/ifaces/ens19
 cat > /etc/net/ifaces/ens19/options << 'EOF'
 TYPE=eth
