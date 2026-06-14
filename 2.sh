@@ -21,8 +21,8 @@ systemctl restart network && sleep 2
 ping -c 2 -W 3 77.88.8.8 && echo "Интернет через ISP работает"
 echo "Yes 2.3"
 
-mkdir -p /etc/net/ifaces/ens19
-cat > /etc/net/ifaces/ens19/options << 'EOF'
+mkdir -p /etc/net/ifaces/ens35
+cat > /etc/net/ifaces/ens35/options << 'EOF'
 TYPE=eth
 BOOTPROTO=static
 DISABLED=no
@@ -31,10 +31,10 @@ SYSTEMD_CONTROLLED=no
 EOF
 echo "Yes 2.4"
 
-mkdir -p /etc/net/ifaces/ens19.100
-cat > /etc/net/ifaces/ens19.100/options << EOF
+mkdir -p /etc/net/ifaces/ens35.100
+cat > /etc/net/ifaces/ens35.100/options << EOF
 TYPE=vlan
-HOST=ens19
+HOST=ens35
 VID=100
 BOOTPROTO=static
 DISABLED=no
@@ -45,10 +45,10 @@ EOF
 echo "192.168.100.1/27" > /etc/net/ifaces/ens19.100/ipv4address
 echo "vlan100"
 
-mkdir -p /etc/net/ifaces/ens19.200
-cat > /etc/net/ifaces/ens19.200/options << EOF
+mkdir -p /etc/net/ifaces/ens35.200
+cat > /etc/net/ifaces/ens35.200/options << EOF
 TYPE=vlan
-HOST=ens19
+HOST=ens35
 VID=200
 BOOTPROTO=static
 DISABLED=no
@@ -62,7 +62,7 @@ echo "vlan 200"
 mkdir -p /etc/net/ifaces/ens19.999
 cat > /etc/net/ifaces/ens19.999/options << EOF
 TYPE=vlan
-HOST=ens19
+HOST=ens35
 VID=999
 BOOTPROTO=static
 DISABLED=no
