@@ -96,3 +96,17 @@ sed -i 's/^#\s*WHEEL_USERS ALL=(ALL:ALL) NOPASSWD: ALL/WHEEL_USERS ALL=(ALL:ALL)
 # Проверка
 su - net_admin -c 'sudo whoami'  # должно вернуть: root
 echo "Yes 2.11"
+
+mkdir -p /etc/net/ifaces/ens20
+cat > /etc/net/ifaces/ens20/options << 'EOF'
+TYPE=eth
+BOOTPROTO=static
+CONFIG_IPV4=yes
+DISABLED=no
+NM_CONTROLLED=no
+SYSTEMD_CONTROLLED=no
+EOF
+
+echo "172.16.2.2/28" > /etc/net/ifaces/ens20/ipv4address
+echo "default via 172.16.2.1" > /etc/net/ifaces/ens20/ipv4route
+echo "yes3.2"
