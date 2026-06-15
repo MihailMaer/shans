@@ -1,5 +1,5 @@
-mkdir -p /etc/net/ifaces/ens19
-cat > /etc/net/ifaces/ens19/options << 'EOF'
+mkdir -p /etc/net/ifaces/ens35
+cat > /etc/net/ifaces/ens35/options << 'EOF'
 TYPE=eth
 BOOTPROTO=static
 CONFIG_IPV4=yes
@@ -8,8 +8,8 @@ NM_CONTROLLED=no
 SYSTEMD_CONTROLLED=no
 EOF
 
-echo "172.16.1.2/28" > /etc/net/ifaces/ens19/ipv4address
-echo "default via 172.16.1.1" > /etc/net/ifaces/ens19/ipv4route
+echo "172.16.1.2/28" > /etc/net/ifaces/ens35/ipv4address
+echo "default via 172.16.1.1" > /etc/net/ifaces/ens35/ipv4route
 echo "Yes 2.2"
 
 cat > /etc/resolv.conf << 'EOF'
@@ -21,8 +21,8 @@ systemctl restart network && sleep 2
 ping -c 2 -W 3 77.88.8.8 && echo "Интернет через ISP работает"
 echo "Yes 2.3"
 
-mkdir -p /etc/net/ifaces/ens19
-cat > /etc/net/ifaces/ens19/options << 'EOF'
+mkdir -p /etc/net/ifaces/ens35
+cat > /etc/net/ifaces/ens35/options << 'EOF'
 TYPE=eth
 BOOTPROTO=static
 DISABLED=no
@@ -31,10 +31,10 @@ SYSTEMD_CONTROLLED=no
 EOF
 echo "Yes 2.4"
 
-mkdir -p /etc/net/ifaces/ens19.100
-cat > /etc/net/ifaces/ens19.100/options << EOF
+mkdir -p /etc/net/ifaces/ens35.100
+cat > /etc/net/ifaces/ens35.100/options << EOF
 TYPE=vlan
-HOST=ens19
+HOST=ens35
 VID=100
 BOOTPROTO=static
 DISABLED=no
@@ -42,13 +42,13 @@ ONBOOT=yes
 CONFIG_IPV4=yes
 EOF
 
-echo "192.168.100.1/27" > /etc/net/ifaces/ens19.100/ipv4address
+echo "192.168.100.1/27" > /etc/net/ifaces/ens35.100/ipv4address
 echo "vlan100"
 
-mkdir -p /etc/net/ifaces/ens19.200
-cat > /etc/net/ifaces/ens19.200/options << EOF
+mkdir -p /etc/net/ifaces/ens35.200
+cat > /etc/net/ifaces/ens35.200/options << EOF
 TYPE=vlan
-HOST=ens19
+HOST=ens35
 VID=200
 BOOTPROTO=static
 DISABLED=no
@@ -56,13 +56,13 @@ ONBOOT=yes
 CONFIG_IPV4=yes
 EOF
 
-echo "192.168.200.1/28" > /etc/net/ifaces/ens19.200/ipv4address
+echo "192.168.200.1/28" > /etc/net/ifaces/ens35.200/ipv4address
 echo "vlan 200"
 
-mkdir -p /etc/net/ifaces/ens19.999
-cat > /etc/net/ifaces/ens19.999/options << EOF
+mkdir -p /etc/net/ifaces/ens35.999
+cat > /etc/net/ifaces/ens35.999/options << EOF
 TYPE=vlan
-HOST=ens19
+HOST=ens35
 VID=999
 BOOTPROTO=static
 DISABLED=no
@@ -96,3 +96,17 @@ sed -i 's/^#\s*WHEEL_USERS ALL=(ALL:ALL) NOPASSWD: ALL/WHEEL_USERS ALL=(ALL:ALL)
 # Проверка
 su - net_admin -c 'sudo whoami'  # должно вернуть: root
 echo "Yes 2.11"
+
+mkdir -p /etc/net/ifaces/ens20
+cat > /etc/net/ifaces/ens20/options << 'EOF'
+TYPE=eth
+BOOTPROTO=static
+CONFIG_IPV4=yes
+DISABLED=no
+NM_CONTROLLED=no
+SYSTEMD_CONTROLLED=no
+EOF
+
+echo "172.16.2.2/28" > /etc/net/ifaces/ens20/ipv4address
+echo "default via 172.16.2.1" > /etc/net/ifaces/ens20/ipv4route
+echo "yes3.2"
