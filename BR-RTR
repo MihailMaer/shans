@@ -1,0 +1,11 @@
+br-rtr(config)#port ge1
+br-rtr(config-port)#service-instance ge1/int1
+br-rtr(config-service-instance)#encapsulation untagged
+br-rtr(config-service-instance)#exit
+br-rtr(config-port)#exit
+br-rtr(config)#interface int1
+br-rtr(config-if)#description “BR-Net”
+br-rtr(config-if)#ip address 192.168.0.1/28
+br-rtr(config-if)#connect port te1 service-instance ge1/int1
+br-rtr(config-if)#exit
+br-rtr(config)#write memory

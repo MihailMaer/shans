@@ -3,3 +3,56 @@ configure terminal
 hostname <hostname>
 ip domain-name <domain-name>
 write memory
+show port btief
+
+
+
+hq-rtr(config)#interface vl100
+hq-rtr(config-if)#description “VLAN 100”
+hq-rtr(config-if)#ip address 192.168.100.1/27
+hq-rtr(config-if)#exit
+hq-rtr(config)#interface vl200
+hq-rtr(config-if)#description “VLAN 200”
+hq-rtr(config-if)#ip address 192.168.200.1/24
+hq-rtr(config-if)#exit
+hq-rtr(config)#interface vl999
+hq-rtr(config-if)#description “VLAN 999”
+hq-rtr(config-if)#ip address 192.168.99.1/29
+hq-rtr(config-if)#exit
+hq-rtr(config)#port ge1
+hq-rtr(config-port)#service-instance ge1/vl100
+hq-rtr(config-service-instance)#encapsulation dot1q 100 exact
+hq-rtr(config-service-instance)#rewrite pop 1
+hq-rtr(config-service-instance)#connect ip interface vl100
+hq-rtr(config-service-instance)#exit
+hq-rtr(config-port)#service-instance ge1/vl200
+hq-rtr(config-service-instance)#encapsulation dot1q 200 exact
+hq-rtr(config-service-instance)#rewrite pop 1
+hq-rtr(config-service-instance)#connect ip interface vl200
+hq-rtr(config-service-instance)#exit
+hq-rtr(config-port)#service-instance ge1/vl999
+hq-rtr(config-service-instance)#encapsulation dot1q 999 exact
+hq-rtr(config-service-instance)#rewrite pop 1
+hq-rtr(config-service-instance)#connect ip interface vl999
+hq-rtr(config-service-instance)#exit
+
+
+show ip interfave brief #проверка
+
+Создание интерфейса с последующим назначением IP-адреса, создание
+сервис-инстанса на порту с указанием нетегированного трафика и конкретного
+интерфейса:
+
+
+hq-rtr(config)#interface isp
+hq-rtr(config-if)#description “ISP”
+hq-rtr(config-if)#ip address 172.16.1.2/28
+hq-rtr(config-if)#exit
+hq-rtr(config)#ip route 0.0.0.0/0 172.16.1.1
+hq-rtr(config)#port ge0
+hq-rtr(config-port)#service-instance ge0/isp
+hq-rtr(config-service-instance)#encapsulation untagged
+hq-rtr(config-service-instance)#connect ip interface isp
+hq-rtr(config-service-instance)#exit
+hq-rtr(config-port)#exit
+hq-rtr(config)#write memory
